@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ThreeDimensions</string>
+    <string name="toggle_button_text">Toggle this button to access second button</string>
+    <string name="show_person">Show person</string>
+    <string name="enable_this_for_access_to_second_activity">Enable this for access to second activity</string>
+    <string name="enable_this_for_access_to_third_activity">Enable this for access to third activity</string>
+</resources>
