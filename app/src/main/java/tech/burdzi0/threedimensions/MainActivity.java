@@ -34,17 +34,15 @@ public class MainActivity extends AppCompatActivity {
 
         button = findViewById(R.id.button);
 
-        button.setOnLongClickListener(secondActivityLongClickListener());
-    }
-
-    private View.OnLongClickListener secondActivityLongClickListener() {
-        return new View.OnLongClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                createSecondActivity();
-                return true;
+            public void onClick(View v) {
+                if (progressBar.getProgress() == 100) {
+                    createSecondActivity();
+                }
             }
-        };
+        });
+        button.setOnLongClickListener(secondActivityLongClickListener());
     }
 
     private void createSecondActivity() {
@@ -63,7 +61,14 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-
-
+    private View.OnLongClickListener secondActivityLongClickListener() {
+        return new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                createSecondActivity();
+                return true;
+            }
+        };
+    }
 
 }
