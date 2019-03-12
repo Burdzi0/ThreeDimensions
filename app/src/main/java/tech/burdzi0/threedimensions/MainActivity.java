@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.Switch;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private ToggleButton toggleButton;
     private Switch aSwitch;
     private Button button;
+    private Button buttonThirdActivity;
+    private String toastText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,40 +37,31 @@ public class MainActivity extends AppCompatActivity {
 
         button = findViewById(R.id.button);
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (progressBar.getProgress() == 100) {
-                    createSecondActivity();
-                }
+        button.setOnClickListener(v -> {
+            if (progressBar.getProgress() == 100) {
+                startActivity(SecondActivity.class);
+            } else {
+                toastText = "Fill the progressbar first!";
+                Toast.makeText(MainActivity.this, toastText, Toast.LENGTH_SHORT).show();
             }
         });
-        button.setOnLongClickListener(secondActivityLongClickListener());
+        button.setOnLongClickListener(v -> startActivity(SecondActivity.class));
+
+        buttonThirdActivity = findViewById(R.id.button2);
+        buttonThirdActivity.setOnClickListener(v -> startActivity(ThirdActivity.class));
     }
 
-    private void createSecondActivity() {
-        Intent myIntent = new Intent(this, SecondActivity.class);
+    private boolean startActivity(Class<?> activityClass) {
+        Intent myIntent = new Intent(this, activityClass);
         this.startActivity(myIntent);
+        return true;
     }
 
     private View.OnClickListener progressBarUpdater(final CompoundButton button) {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int halfOfProgressBar = 50;
-                int change = button.isChecked() ? halfOfProgressBar : -halfOfProgressBar;
-                progressBar.setProgress(progressBar.getProgress() + change, true);
-            }
-        };
-    }
-
-    private View.OnLongClickListener secondActivityLongClickListener() {
-        return new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                createSecondActivity();
-                return true;
-            }
+        return v -> {
+            int halfOfProgressBar = 50;
+            int change = button.isChecked() ? halfOfProgressBar : -halfOfProgressBar;
+            progressBar.setProgress(progressBar.getProgress() + change, true);
         };
     }
 
